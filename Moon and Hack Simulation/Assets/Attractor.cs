@@ -5,7 +5,7 @@ using UnityEngine;
 public class Attractor : MonoBehaviour
 {
 
-    const float G = .6674f;
+    const float G = 2f;
     public Vector3 vel;
 
     public Rigidbody rb;
@@ -30,6 +30,7 @@ public class Attractor : MonoBehaviour
 
     void Attract(Attractor objToAttract)
     {
+        //rb.velocity = vel;
         Rigidbody rbToAttract = objToAttract.rb;
 
         Vector3 direction = rb.position - rbToAttract.position;
