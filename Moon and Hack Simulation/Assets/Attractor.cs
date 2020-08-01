@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+[RequireComponent(typeof(Button))]
 
 public class Attractor : MonoBehaviour
 {
@@ -9,23 +13,44 @@ public class Attractor : MonoBehaviour
     public Vector3 vel;
 
     public Rigidbody rb;
+
+    private Button starter { get { return GetComponent<Button>(); } }
+    public bool on;
+    
     void Start()
     {
+        //rb.velocity = new Vector3(0f,0f,0f);
         rb.velocity = vel;
+        on = true;
+        starter.onClick.AddListener(() => sim_on());
     }
+
+    void sim_on()
+    {
+        Debug.Log("click workings");
+        on = !on;
+        rb.velocity = new Vector3(0f, 0f, 0f);
+
+    }
+
 
     private void FixedUpdate()
     {
 
-        Attractor[] attractors = FindObjectsOfType<Attractor>();
-        foreach (Attractor attractor in attractors)
+        if (on == true)
         {
-            if (attractor != this)
+            
+            Attractor[] attractors = FindObjectsOfType<Attractor>();
+            foreach (Attractor attractor in attractors)
             {
-                Attract(attractor);
-            }
+                if (attractor != this)
+                {
+                    Attract(attractor);
+                }
 
+            }
         }
+        
     }
 
     void Attract(Attractor objToAttract)
@@ -40,6 +65,8 @@ public class Attractor : MonoBehaviour
         Vector3 force = direction.normalized * forceMagnitude;
 
         rbToAttract.AddForce(force);
+
+        // Application.LoadLevel(Application.loadedLevel);
 
     }
 
