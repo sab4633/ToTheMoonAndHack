@@ -24,7 +24,7 @@ public class Attractor : MonoBehaviour
         on = true;
         starter.onClick.AddListener(() => sim_on());
     }
-
+    //click still not working
     void sim_on()
     {
         Debug.Log("click workings");
